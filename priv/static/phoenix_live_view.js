@@ -2814,6 +2814,15 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
     "wbr"
   ]);
   var quoteChars = /* @__PURE__ */ new Set(["'", '"']);
+  function emitNullTemplates(templates, source) {
+    if (templates === null) {
+      window.dispatchEvent(
+        new CustomEvent("phx:invalid-state", {
+          detail: new Error(`${source}: null templates`)
+        })
+      );
+    }
+  }
   var modifyRoot = (html, attrs, clearInnerHTML) => {
     let i = 0;
     let insideComment = false;
@@ -3093,6 +3102,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
       return !!diff[STATIC];
     }
     templateStatic(part, templates) {
+      emitNullTemplates(templates, "templateStatic");
       if (typeof part === "number") {
         return templates[part];
       } else {
@@ -3120,6 +3130,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
         delete rendered[TEMPLATES];
       }
       let { [STATIC]: statics } = rendered;
+      emitNullTemplates(templates, "toOutputBuffer");
       statics = this.templateStatic(statics, templates);
       rendered[STATIC] = statics;
       const isRoot = rendered[ROOT];
@@ -3159,6 +3170,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
     }
     comprehensionToBuffer(rendered, templates, output, changeTracking) {
       const keyedTemplates = templates || rendered[TEMPLATES];
+      emitNullTemplates(templates, "comprehensionToBuffer");
       const statics = this.templateStatic(rendered[STATIC], templates);
       rendered[STATIC] = statics;
       delete rendered[TEMPLATES];
