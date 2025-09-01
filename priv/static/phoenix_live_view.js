@@ -5032,7 +5032,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
               finish(null);
             }
           },
-          error: (reason) => reject(new Error(`failed with reason: ${reason}`)),
+          error: (reason) => reject(new Error(`failed with reason: ${JSON.stringify(reason)}`)),
           timeout: () => {
             reject(new Error("timeout"));
             if (this.joinCount === oldJoinCount) {
