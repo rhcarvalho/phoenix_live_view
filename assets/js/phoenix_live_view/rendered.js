@@ -431,6 +431,7 @@ export default class Rendered {
     }
 
     let { [STATIC]: statics } = rendered;
+    // THIS ONE TRIGGERED IN PROD!!!
     emitNullTemplates(templates, "toOutputBuffer");
     statics = this.templateStatic(statics, templates);
     rendered[STATIC] = statics;
