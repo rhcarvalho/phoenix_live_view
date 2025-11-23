@@ -11,10 +11,11 @@ const JS = {
       null,
       { callback: defaults && defaults.callback },
     ];
-    const commands =
-      phxEvent.charAt(0) === "["
-        ? JSON.parse(phxEvent)
-        : [[defaultKind, defaultArgs]];
+    const commands = Array.isArray(phxEvent)
+      ? phxEvent
+      : typeof phxEvent === "string" && phxEvent.startsWith("[")
+      ? JSON.parse(phxEvent)
+      : [[defaultKind, defaultArgs]];
 
     commands.forEach(([kind, args]) => {
       if (kind === defaultKind) {
