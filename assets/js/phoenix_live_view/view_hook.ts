@@ -114,13 +114,13 @@ export interface HookInterface<E extends HTMLElement = HTMLElement> {
   pushEventTo(
     selectorOrTarget: PhxTarget,
     event: string,
-    payload: object,
+    payload: any,
     onReply: OnReply,
   ): void;
   pushEventTo(
     selectorOrTarget: PhxTarget,
     event: string,
-    payload?: object,
+    payload?: any,
   ): Promise<PromiseSettledResult<{ reply: any; ref: number }>[]>;
 
   /**
@@ -443,18 +443,18 @@ export class ViewHook<E extends HTMLElement = HTMLElement>
   pushEventTo(
     selectorOrTarget: PhxTarget,
     event: string,
-    payload: object,
+    payload: any,
     onReply: OnReply,
   ): void;
   pushEventTo(
     selectorOrTarget: PhxTarget,
     event: string,
-    payload?: object,
+    payload?: any,
   ): Promise<PromiseSettledResult<{ reply: any; ref: number }>[]>;
   pushEventTo(
     selectorOrTarget: PhxTarget,
     event: string,
-    payload?: object,
+    payload?: any,
     onReply?: OnReply,
   ): Promise<PromiseSettledResult<{ reply: any; ref: number }>[]> | void {
     if (onReply === undefined) {
